@@ -1,4 +1,8 @@
 DynamicValidations::Application.routes.draw do
+  resources :responses
+
+  resources :questions
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
