@@ -4,6 +4,7 @@ class Question < ActiveRecord::Base
   #  register their children for, I want to be able to create custom questions to ask at registration time
   #  to collect information such as uniform size, game time preferences, what school they attend and the like.
   
+  belongs_to            :division
   has_many              :responses
   
   serialize             :question_choices
@@ -26,9 +27,9 @@ class Question < ActiveRecord::Base
     when 'text'
       errors.add(:question_choices, "is not a valid question response") unless question_choices.blank?
     when 'single'
-      errors.add(:question_choices, "is not a valid question response") unless (question_choices.length > 2)
+      errors.add(:question_choices, "is not a valid question response") unless (question_choices.length > 1)
     when 'multi'
-      errors.add(:question_choices, "is not a valid question response") unless (question_choices.length > 2)
+      errors.add(:question_choices, "is not a valid question response") unless (question_choices.length > 1)
     end
   end
   # -------------------

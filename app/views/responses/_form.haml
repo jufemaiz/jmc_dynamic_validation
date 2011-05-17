@@ -1,21 +1,19 @@
-<%= form_for(@response) do |f| %>
-  <% if @response.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@response.errors.count, "error") %> prohibited this response from being saved:</h2>
-
-      <ul>
-      <% @response.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :text %><br />
-    <%= f.text_field :text %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+- form.fields_for :responses do |ff|
+	- q = ff.object.question
+	.field
+		= ff.hidden_field :question_id
+		- case q.question_type
+		- when 'text'
+			= ff.label :text, q.question_text
+			= ff.text_field :text
+		- when 'single'
+			= ff.label :text, q.question_text
+			= ff.select :text, q.question_choices.collect { |qc| [qc,qc] }
+		- when 'multi'
+			%fieldset
+				%legend
+					= q.question_text
+				- q.question_choices.each do |qc|
+					%label
+						= ff.check_box_tag :text, qc
+						= qc

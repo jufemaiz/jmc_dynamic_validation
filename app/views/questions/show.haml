@@ -1,20 +1,28 @@
-<p id="notice"><%= notice %></p>
+.container
+	%h1
+		= link_to "Division #{@question.division.id}", division_path(@question.division.id)
+		&raquo;
+		= @question.question_text
 
-<p>
-  <b>Question type:</b>
-  <%= @question.question_type %>
-</p>
+	%p#notice
+		= notice
 
-<p>
-  <b>Question text:</b>
-  <%= @question.question_text %>
-</p>
+	%p
+		%strong Question type:
+		= @question.question_type
 
-<p>
-  <b>Question choices:</b>
-  <%= @question.question_choices %>
-</p>
+	%p
+		%strong Question choices:
+		- if @question.question_choices.blank?
+			No question choices.
+		- else
+			= @question.question_choices.join('<br />')
+	%h2 Responses
+	- if @question.responses.length > 0
+	- else
+		%p No responses.
 
+	= link_to 'Edit', edit_question_path(@question)
+	|
+	= link_to 'Back', questions_path
 
-<%= link_to 'Edit', edit_question_path(@question) %> |
-<%= link_to 'Back', questions_path %>

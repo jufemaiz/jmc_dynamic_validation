@@ -1,27 +1,29 @@
-<h1>Listing questions</h1>
+.container
+	%h1 Listing questions
 
-<table>
-  <tr>
-    <th>Question type</th>
-    <th>Question text</th>
-    <th>Question choices</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @questions.each do |question| %>
-  <tr>
-    <td><%= question.question_type %></td>
-    <td><%= question.question_text %></td>
-    <td><%= question.question_choices %></td>
-    <td><%= link_to 'Show', question %></td>
-    <td><%= link_to 'Edit', edit_question_path(question) %></td>
-    <td><%= link_to 'Destroy', question, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Question', new_question_path %>
+	%table
+		%thead
+			%tr
+				%th Division
+				%th Question type
+				%th Question text
+				%th Question choices
+				%th{ :colspan => 3 }
+  
+		%tbody
+			- @questions.each do |question|
+				%tr
+					%th
+						= link_to question.division.id, division_path(question.division.id)
+					%td
+						= question.question_type
+					%td
+						= question.question_text
+					%td
+						= question.question_choices
+					%td
+						= link_to 'Show', division_question_path(question, :division_id => question.division)
+					%td
+						= link_to 'Edit', edit_division_question_path(question, :division_id => question.division)
+					%td
+						= link_to 'Destroy', question, :confirm => 'Are you sure?', :method => :delete

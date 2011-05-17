@@ -1,29 +1,25 @@
-<%= form_for(@question) do |f| %>
-  <% if @question.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
+- form_for(@question) do |f|
+	- if @question.errors.any?
+		#error_explanation
+			%h2
+				= pluralize(@question.errors.count, "error")
+				prohibited this question from being saved
+			%ul
+				- @question.errors.full_messages.each do |msg|
+					%li
+						= msg
 
-      <ul>
-      <% @question.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :question_type %><br />
-    <%= f.text_field :question_type %>
-  </div>
-  <div class="field">
-    <%= f.label :question_text %><br />
-    <%= f.text_field :question_text %>
-  </div>
-  <div class="field">
-    <%= f.label :question_choices %><br />
-    <%= f.text_area :question_choices %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+	%div{ :class => "field" }
+		= f.label :question_type
+		= f.text_field :question_type
+	
+	%div{ :class => "field" }
+		= f.label :question_text
+		= f.text_field :question_text
+	
+	%div{ :class => "field" }
+		= f.label :question_choices
+		= f.text_area :question_choices
+	
+	%div{:class => "actions"}
+		= f.submit

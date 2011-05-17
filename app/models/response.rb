@@ -5,6 +5,7 @@ class Response < ActiveRecord::Base
   #  to collect information such as uniform size, game time preferences, what school they attend and the like.
   
   belongs_to            :question
+  belongs_to            :registration
   
   serialize             :text   # Response.text is always a serialised array
   

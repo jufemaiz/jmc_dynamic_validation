@@ -3,6 +3,11 @@ class QuestionsController < ApplicationController
   # GET /questions.xml
   def index
     @questions = Question.all
+    
+    if params[:division_id].nil?
+    else
+      @questions = Question.where(:division_id => params[:division_id].to_i)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +18,8 @@ class QuestionsController < ApplicationController
   # GET /questions/1
   # GET /questions/1.xml
   def show
-    @question = Question.find(params[:id])
+    @division = Division.find(params[:division_id])
+    @question = @division.questions.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +30,8 @@ class QuestionsController < ApplicationController
   # GET /questions/new
   # GET /questions/new.xml
   def new
-    @question = Question.new
+    @division = Division.find(params[:division_id])
+    @question = @division.questions.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +41,15 @@ class QuestionsController < ApplicationController
 
   # GET /questions/1/edit
   def edit
-    @question = Question.find(params[:id])
+    @division = Division.find(params[:division_id])
+    @question = @division.questions.find(params[:id])
   end
 
   # POST /questions
   # POST /questions.xml
   def create
-    @question = Question.new(params[:question])
+    @division = Division.find(params[:division_id])
+    @question = @division.questions.new(params[:question])
 
     respond_to do |format|
       if @question.save
@@ -56,7 +65,8 @@ class QuestionsController < ApplicationController
   # PUT /questions/1
   # PUT /questions/1.xml
   def update
-    @question = Question.find(params[:id])
+    @division = Division.find(params[:division_id])
+    @question = @division.questions.find(params[:id])
 
     respond_to do |format|
       if @question.update_attributes(params[:question])
